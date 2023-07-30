@@ -2,7 +2,10 @@ package tests;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import pages.HomePage;
 
 
@@ -13,12 +16,14 @@ public class BaseTests {
 
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
-        driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+		ChromeOptions opt = new ChromeOptions();
+        driver=new ChromeDriver(opt);
     }
 
     @BeforeMethod
     public void goHome(){
+        driver.manage().window().maximize();
         driver.get("https://the-internet.herokuapp.com/");
         homePage = new HomePage(driver);
     }
